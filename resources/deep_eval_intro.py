@@ -18,7 +18,7 @@ case_2 = LLMTestCase(
 )
 
 # --- One metric, judged by an LLM (pinned for reproducibility) ---
-metric = AnswerRelevancyMetric(threshold=0.7, model="gpt-4.1", include_reason=True)
+metric = AnswerRelevancyMetric(threshold=0.7, model="groq/compound-mini", include_reason=True)
 
 # --- Run BOTH cases through the metric, with a printed report ---
 evaluate(test_cases=[case_1, case_2], metrics=[metric])
