@@ -1,18 +1,29 @@
 import json
+import os
 
 from dotenv import load_dotenv
 
 from deepeval import evaluate
 from deepeval.test_case import LLMTestCase
 from deepeval.metrics import ContextualRecallMetric, ContextualPrecisionMetric
+from deepeval.models import OpenRouterModel
+from deepeval.evaluate.configs import CacheConfig
 
 from src.retriever import build_retriever
 
 load_dotenv()
 
 GOLDEN_PATH = "goldens/retriever_goldens.json"
-# JUDGE_MODEL = "gpt-4.1-mini" 
-JUDGE_MODEL = "groq/compound-mini" 
+JUDGE_MODEL = OpenRouterModel(
+    # model="openai/gpt-4.1-mini",
+    model="openai/gpt-4o-mini",
+    api_key=os.getenv("OPENROUTER_API_KEY"),
+    base_url="https://openrouter.ai/api/v1",
+    generation_kwargs={
+        "max_tokens": 1000
+    }
+) 
+
 THRESHOLD = 0.7
 
 # 1. LOAD the golden set --- the fixed, human-authored truth
@@ -55,7 +66,11 @@ evaluate(
         "chunk_size": 1000,
         "chunk_overlap": 150,
         "top_k": 5,
-        "judge_model": JUDGE_MODEL,
+        "judge_model": "openai/gpt-4o-mini via OpenRouter",
         "golden_set": GOLDEN_PATH,
     },
+    cache_config=CacheConfig(
+        write_cache=False,
+        use_cache=False,
+    ),
 )
