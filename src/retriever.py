@@ -39,8 +39,8 @@ def load_transcripts():
 # 2. BUILD ---- chunk, embed once, and keep it on disk so we don't re-embed
 def load_store():
 
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-    # embeddings = HuggingFaceEmbeddings(model_name="BAAI/bge-base-en-v1.5")
+    # embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    embeddings = HuggingFaceEmbeddings(model_name="BAAI/bge-large-en-v1.5")
 
     if os.path.exists(DB_DIR):
         return Chroma(persist_directory=DB_DIR, embedding_function=embeddings)
