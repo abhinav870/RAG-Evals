@@ -9,7 +9,7 @@ load_dotenv()
 case_1 = LLMTestCase(
     input="What is the capital of France?",
     actual_output="The capital of France is Paris.",
-)
+)   
 
 # --- Test case 2: an off-topic answer (should FAIL) ---
 case_2 = LLMTestCase(

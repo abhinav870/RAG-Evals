@@ -39,7 +39,7 @@ test_cases = []
 
 for g in goldens:
     retrieved = retriever.invoke(g["query"])
-    retrieval_context = [doc.page_content for doc in retrieved]
+    retrieval_context = [doc.page_content for doc in retrieved] # Fetch the top most relevant docs (k=5) for the current query from vector DB
 
     test_cases.append(
         LLMTestCase(
