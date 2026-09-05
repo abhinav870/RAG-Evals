@@ -20,6 +20,8 @@ that one waits for the whole answer and the other emits it token-by-token.
 import os
 
 from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
+from langchain_openai import ChatOpenAI
+
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
@@ -30,14 +32,22 @@ load_dotenv()
 
 # llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
-llm_model = HuggingFaceEndpoint(
-    repo_id="meta-llama/Llama-3.1-8B-Instruct",
-    task="conversational",
-    max_new_tokens=1000,
-    temperature=0.3
-)
+# llm_model = HuggingFaceEndpoint(
+#     repo_id="meta-llama/Llama-3.1-8B-Instruct",
+#     task="conversational",
+#     max_new_tokens=1000,
+#     temperature=0.3
+# )
 
-llm = ChatHuggingFace(llm=llm_model)
+# llm = ChatHuggingFace(llm=llm_model)
+
+llm = ChatOpenAI(
+    model="openai/gpt-4o-mini",
+    api_key=os.getenv("OPENROUTER_API_KEY"),
+    base_url="https://openrouter.ai/api/v1",
+    temperature=0.3,
+    max_tokens=1000,
+)
 
 # faithfulness-first prompt: ground every claim in the context, abstain if unsure
 prompt = ChatPromptTemplate.from_template(
