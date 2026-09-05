@@ -45,7 +45,7 @@ for g in goldens:
         LLMTestCase(
             input=g["query"],
             expected_output=g["ideal_answer"],
-            retrieval_context=retrieval_context,
+            retrieval_context=retrieval_context, # We are evaluating the retriever, so we pass the retrieved context here
             actual_output="(generator not evaluated in this run)",
         )
     )
