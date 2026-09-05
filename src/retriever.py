@@ -46,13 +46,13 @@ def load_store():
         return Chroma(persist_directory=DB_DIR, embedding_function=embeddings)
 
     docs = load_transcripts()
-    chunks = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150,).split_documents(docs)
+    chunks = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=400,).split_documents(docs)
 
     return Chroma.from_documents(chunks, embeddings, persist_directory=DB_DIR)
 
 # 3. RETRIEVER ---- build the retriever
 def build_retriever():
-    return load_store().as_retriever(search_kwargs={"k": 5})
+    return load_store().as_retriever(search_kwargs={"k": 3})
 
 # 4. GROQ LLM
 def build_llm():
